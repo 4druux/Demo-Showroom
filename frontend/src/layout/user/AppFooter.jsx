@@ -20,7 +20,7 @@ const AppFooter = () => {
       <div className="container mx-auto flex flex-col xl:flex-row items-start justify-between px-4 xl:px-0 gap-4 xl:gap-10 py-10 text-sm">
         <div className="">
           <Image
-            src="/images/logo/logo.png"
+            src="/images/Logo/logo.png"
             alt="demo-showroom-logo"
             width={180}
             height={20}

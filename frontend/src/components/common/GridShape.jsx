@@ -8,7 +8,7 @@ export default function GridShape() {
         <Image
           width={720}
           height={338}
-          src="/images/shape/grid-01.svg"
+          src="/images/Shape/grid-01.svg"
           alt="grid"
           className="object-cover object-top-left"
         />
@@ -17,7 +17,7 @@ export default function GridShape() {
         <Image
           width={720}
           height={338}
-          src="/images/shape/grid-01.svg"
+          src="/images/Shape/grid-01.svg"
           alt="grid"
           className="object-cover"
         />

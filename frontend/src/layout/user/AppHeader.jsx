@@ -109,7 +109,7 @@ function AppHeader() {
           <Link href="/">
             <div className="">
               <Image
-                src="/images/logo/logo-name.png"
+                src="/images/Logo/logo-name.png"
                 alt="demo-shworoom-logo"
                 width={180}
                 height={20}

@@ -54,7 +54,7 @@ export default function SignUpForm() {
         <Link href="/">
           <div className="flex items-center justify-center">
             <Image
-              src="/images/logo/logo.png"
+              src="/images/Logo/logo.png"
               alt="demo-shworoom-logo"
               width={130}
               height={35}

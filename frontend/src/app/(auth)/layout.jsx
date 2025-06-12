@@ -27,7 +27,7 @@ export default function AuthLayout({ children }) {
                   <Image
                     width={231}
                     height={48}
-                    src="/images/logo/name-white.png"
+                    src="/images/Logo/name-white.png"
                     alt="Logo"
                     className="cursor-pointer lg:w-[400px] lg:h-[65px]"
                   />
