@@ -231,7 +231,7 @@ const AppSidebar = () => {
             <>
               <Image
                 className=""
-                src="/images/logo/logo.png"
+                src="/images/Logo/logo.png"
                 alt="Logo"
                 width={180}
                 height={40}
@@ -239,7 +239,7 @@ const AppSidebar = () => {
             </>
           ) : (
             <Image
-              src="/images/logo/logo.png"
+              src="/images/Logo/logo.png"
               alt="Logo"
               width={32}
               height={32}

@@ -40,70 +40,70 @@ function Testimoni() {
 
   const testimonials = [
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 5,
       title: "Ayu Rahmawati",
       description:
         "Layanannya luar biasa! Tim sangat ramah dan proses jual beli mobil jadi lebih mudah dari yang saya bayangkan.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 4.7,
       title: "Rizky Maulana",
       description:
         "Awalnya ragu, tapi ternyata sangat terpercaya. Mobil langsung laku dalam seminggu!",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 4.2,
       title: "Linda Oktaviani",
       description:
         "Platform-nya gampang digunakan, tampilannya menarik. Saya senang bisa tukar tambah mobil di sini.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 3.9,
       title: "Gilang Saputra",
       description:
         "Prosesnya cukup cepat, hanya saja tim customer support agak lambat merespons di awal.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 4.8,
       title: "Dian Puspita",
       description:
         "Baru kali ini jual mobil semudah ini. Dari upload sampai laku hanya butuh 3 hari!",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 3.5,
       title: "Arif Budiman",
       description:
         "Cukup puas, walaupun ada keterlambatan konfirmasi saat awal transaksi. Selebihnya oke.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 4.9,
       title: "Salsabila Noor",
       description:
         "Sangat profesional. Admin bantu sampai proses selesai, bahkan bantu cari pembeli langsung.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 2.5,
       title: "Bagus Haryanto",
       description:
         "Desain bagus, tapi pengalaman tukar tambah saya kurang memuaskan. Banyak dokumen yang harus dilengkapi ulang.",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 5,
       title: "Maya Kartika",
       description:
         "Perfect! Saya tukar mobil lama dengan unit baru tanpa ribet, dan semua online!",
     },
     {
-      imgSrc: "/images/carousel/testi.jpg",
+      imgSrc: "/images/Carousel/testi.jpg",
       rating: 4,
       title: "Fajar Alamsyah",
       description:

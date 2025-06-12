@@ -15,7 +15,7 @@ const TradeInCarPage = () => {
   return (
     <div className="min-h-screen">
       <CarouselGlobal
-        imageUrl="/images/placeholder-banner.webp"
+        imageUrl="/images/Carousel/placeholder-banner.webp"
         imageAlt="Tukar Tambah Mobil Lama Anda"
         title="Tukar Tambah Mobil Lebih Untung"
         subtitle="Dapatkan Penawaran Terbaik untuk Mobil Lama Anda"

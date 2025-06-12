@@ -25,10 +25,10 @@ function HomePageLogicAndContent() {
   const { trackHomepageVisit } = useTraffic();
 
   const bannerImages = [
-    "/images/placeholder-banner.webp",
-    "/images/placeholder-banner.webp",
-    "/images/placeholder-banner.webp",
-    "/images/placeholder-banner.webp",
+    "/images/Carousel/placeholder-banner.webp",
+    "/images/Carousel/placeholder-banner.webp",
+    "/images/Carousel/placeholder-banner.webp",
+    "/images/Carousel/placeholder-banner.webp",
   ];
 
   useEffect(() => {

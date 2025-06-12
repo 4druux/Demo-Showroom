@@ -15,7 +15,7 @@ const SellCarPage = () => {
   return (
     <div className="min-h-screen">
       <CarouselGlobal
-        imageUrl="/images/placeholder-banner.webp"
+        imageUrl="/images/Carousel/placeholder-banner.webp"
         imageAlt="Jual Mobil Cepat dan Aman"
         title="Jual Mobil Cepat Laku & Aman"
         subtitle="Bebas Drama & Tipu-Tipu"
