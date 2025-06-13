@@ -19,7 +19,7 @@ const CarPricingInfo = ({ product, variants }) => {
   const { isBookmarked, toggleBookmark } = useProducts();
   const [selectedTenor, setSelectedTenor] = useState(null);
   const [showStickyBar, setShowStickyBar] = useState(false);
-  const WHATSAPP_NUMBER = "6282123736730";
+  const WHATSAPP_NUMBER = "6285810249867";
   const pricingInfoRef = useRef(null);
   const router = useRouter();
   const liked = isBookmarked(product._id);

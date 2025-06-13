@@ -12,6 +12,8 @@ const EmptyProductDisplay = ({
   emptyMessage,
   suggestedQuery,
   searchQuery,
+  filterBrand,
+  filterModel,
   suggestionLinkHref,
   onSuggestionClick,
   showFilterRecommendations,
@@ -19,13 +21,30 @@ const EmptyProductDisplay = ({
   onProductClick,
   isAdminRoute = false,
 }) => {
-  const handleChatAdminForSoldUnit = () => {
-    let message = `Halo Kak, saya melihat unit *${product.carName}* di website DemoShowroom.id sudah terjual.\n\n`;
-    message += `Apakah ada unit lain yang serupa atau rekomendasi lainnya yang tersedia?\n\n`;
-    message += `Link Produk yang terjual: ${window.location.href}\n\n`;
-    message += `Terima kasih.`;
+  const handleChatAdminUnitNotAvailable = () => {
+    let message;
+    let searchedItem = "";
+
+    if (filterBrand || filterModel) {
+      searchedItem = [filterBrand, filterModel].filter(Boolean).join(" ");
+    } else if (searchQuery) {
+      searchedItem = searchQuery;
+    }
+
+    if (searchedItem) {
+      message =
+        `Halo Kak, saya mencari mobil "${searchedItem}" di website MukrindoMotor.id tapi unitnya tidak tersedia.\n\n` +
+        `Apakah ada rekomendasi unit lain yang serupa?\n\n` +
+        `Terima kasih.`;
+    } else {
+      message =
+        `Halo Kak, saya tidak menemukan mobil yang saya cari di website MukrindoMotor.id.\n\n` +
+        `Bisa bantu saya dengan rekomendasi unit lain?\n\n` +
+        `Terima kasih.`;
+    }
+
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/6282123736730?text=${encodedMessage}`, "_blank");
+    window.open(`https://wa.me/6285810249867?text=${encodedMessage}`, "_blank");
   };
 
   const handleNotifyMeClick = () => {
@@ -102,7 +121,7 @@ const EmptyProductDisplay = ({
               >
                 <ButtonMagnetic
                   type="button"
-                  onClick={handleChatAdminForSoldUnit}
+                  onClick={handleChatAdminUnitNotAvailable}
                   className="!m-0 !py-1.5 !px-6 text-green-600 group-hover:text-white"
                   icon={<FaWhatsapp className="w-5 h-5" />}
                   textColor="#16a34a"
