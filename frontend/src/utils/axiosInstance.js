@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
     }
 
     if (!isServer) {
-      const token = localStorage.getItem("mukrindoAuthToken");
+      const token = localStorage.getItem("demoShowroomAuthToken");
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
