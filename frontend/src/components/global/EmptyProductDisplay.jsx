@@ -33,12 +33,12 @@ const EmptyProductDisplay = ({
 
     if (searchedItem) {
       message =
-        `Halo Kak, saya mencari mobil "${searchedItem}" di website MukrindoMotor.id tapi unitnya tidak tersedia.\n\n` +
+        `Halo Kak, saya mencari mobil "${searchedItem}" di website DemoShowroom.id tapi unitnya tidak tersedia.\n\n` +
         `Apakah ada rekomendasi unit lain yang serupa?\n\n` +
         `Terima kasih.`;
     } else {
       message =
-        `Halo Kak, saya tidak menemukan mobil yang saya cari di website MukrindoMotor.id.\n\n` +
+        `Halo Kak, saya tidak menemukan mobil yang saya cari di website DemoShowroom.id.\n\n` +
         `Bisa bantu saya dengan rekomendasi unit lain?\n\n` +
         `Terima kasih.`;
     }

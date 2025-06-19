@@ -402,7 +402,7 @@ const EditProduct = ({ productId }) => {
       if (filesToUpload.length > 0) {
         const newUploadedUrls = await uploadMultipleImagesToCloudinary(
           filesToUpload,
-          "demoshowroom_products",
+          "mukrindo_products",
           (currentIndex, totalFiles) => {
             setUploadProgress({ current: currentIndex, total: totalFiles });
           }
@@ -654,6 +654,7 @@ const EditProduct = ({ productId }) => {
               }
               error={errors.numberOfSeats}
               options={[
+                { value: "2", label: "2 Kursi" },
                 { value: "4", label: "4 Kursi" },
                 { value: "5", label: "5 Kursi" },
                 { value: "6", label: "6 Kursi" },

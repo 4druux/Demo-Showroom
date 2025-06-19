@@ -9,7 +9,7 @@ const FeatureCard = ({
   title,
   description,
   linkUrl,
-  iconBgColor = "bg-blue-600",
+  iconBgColor = "bg-gradient-to-br from-sky-500 via-blue-400 to-blue-700",
   iconColor = "text-white",
   iconSize = "w-10 h-10",
   iconContainerSize = "w-20 h-20",

@@ -98,7 +98,7 @@ const createEmailHtml = (title, data, ctaLink) => {
               <td>${data.model}</td>
             </tr>
             <tr>
-              <th>Nama Pelanggan</th>
+              <th>Kontak Pelanggan</th>
               <td>${data.customer}</td>
             </tr>
           </table>
@@ -120,9 +120,9 @@ exports.sendNotificationEmail = async (notificationType, previewData) => {
   console.log("Mencoba mengirim email dengan SendGrid...");
 
   const subjectMap = {
-    tradeIn: "Permintaan Trade-In Baru",
-    buySell: "Permintaan Jual Mobil Baru",
-    notifStock: "Permintaan Notifikasi Stok Baru",
+    tradeIn: "Permintaan Tukar Tambah",
+    buySell: "Permintaan Jual Mobil",
+    notifStock: "Permintaan Notifikasi Stok",
   };
 
   const title = subjectMap[notificationType];

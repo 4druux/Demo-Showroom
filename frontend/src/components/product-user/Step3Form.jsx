@@ -9,7 +9,7 @@ import {
   provinceOptions,
   getCityOptions,
 } from "@/utils/locationData";
-import { MapPin } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import ButtonMagnetic from "../common/ButtonMagnetic";
 import ButtonAction from "../common/ButtonAction";
 
@@ -21,6 +21,7 @@ const Step3Form = ({
   onSubmit,
   onNext,
   onBack,
+  isSubmitting,
   currentStep,
   totalCarSteps,
   isSellRoute = false,
@@ -103,11 +104,11 @@ const Step3Form = ({
               value="showroom"
               checked={formData.inspectionLocationType === "showroom"}
               onChange={handleLocationTypeChange}
-              className="form-radio h-4 w-4 accent-sky-600"
+              className="form-radio h-4 w-4 accent-sly-600"
             />
 
             <span className="text-xs lg:text-sm  font-medium text-gray-700">
-              Demo Showroom
+              Showroom Mukrindo Motor
             </span>
           </label>
 
@@ -118,7 +119,7 @@ const Step3Form = ({
               value="rumah"
               checked={formData.inspectionLocationType === "rumah"}
               onChange={handleLocationTypeChange}
-              className="form-radio h-4 w-4 accent-sky-600"
+              className="form-radio h-4 w-4 accent-sly-600"
             />
             <span className="text-xs lg:text-sm font-medium text-gray-700">
               Rumah
@@ -130,10 +131,10 @@ const Step3Form = ({
           <>
             <div className="mt-2">
               <a
-                href="https://maps.app.goo.gl/HznCYdg2GRYAJcEaA"
+                href="https://maps.app.goo.gl/Yzri7iGL8dZb1W8z6"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-sky-500 hover:text-sky-600 hover:underline inline-flex items-center cursor-pointer"
+                className="text-xs text-sly-500 hover:text-sly-600 hover:underline inline-flex items-center cursor-pointer"
               >
                 <MapPin size={12} className="mr-1" />
                 Lihat Peta Lokasi
@@ -159,7 +160,7 @@ const Step3Form = ({
                 id="showroomAddress"
                 name="showroomAddress"
                 title="Alamat Showroom"
-                description="Demo Showroom"
+                description="showroom Mukrindo Motor"
                 options={showroomOptions}
                 value={formData.showroomAddress}
                 onChange={(value) =>
@@ -310,7 +311,7 @@ const Step3Form = ({
                 name="termsAccepted"
                 checked={termsAccepted}
                 onChange={onTermsChange}
-                className="form-checkbox h-4 w-4 accent-sky-600 rounded border-gray-300 cursor-pointer"
+                className="form-checkbox h-4 w-4 accent-sly-600 rounded border-gray-300 cursor-pointer"
               />
               <span className="text-xs text-gray-700">
                 Saya setuju dengan{" "}
@@ -318,7 +319,7 @@ const Step3Form = ({
                   href="/syarat-ketentuan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sky-600 hover:underline font-medium"
+                  className="text-sly-600 hover:underline font-medium"
                 >
                   Syarat dan Ketentuan
                 </a>{" "}
@@ -327,11 +328,11 @@ const Step3Form = ({
                   href="/kebijakan-privasi"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sky-600 hover:underline font-medium"
+                  className="text-sly-600 hover:underline font-medium"
                 >
                   Kebijakan Privasi
                 </a>{" "}
-                dari Demo Showroom
+                dari Mukrindo Motor
               </span>
             </label>
             {termsError && (
@@ -353,12 +354,25 @@ const Step3Form = ({
           <ButtonMagnetic
             type="button"
             onClick={onBack}
+            disabled={isSubmitting}
             className="!py-2.5 !m-0"
           >
             Kembali
           </ButtonMagnetic>
-          <ButtonAction type="button" onClick={isSellRoute ? onSubmit : onNext}>
-            {isSellRoute ? "Jual Sekarang" : "Selanjutnya"}
+
+          <ButtonAction
+            type="button"
+            onClick={isSellRoute ? onSubmit : onNext}
+            disabled={isSubmitting}
+          >
+            {isSubmitting && isSellRoute ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Mengirim...
+              </>
+            ) : (
+              <>{isSellRoute ? "Jual Sekarang" : "Selanjutnya"}</>
+            )}
           </ButtonAction>
         </motion.div>
       </motion.div>
