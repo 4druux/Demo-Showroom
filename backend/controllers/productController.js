@@ -1,3 +1,5 @@
+// controllers/productController.js
+
 const Product = require("../models/productModels");
 const cloudinary = require("cloudinary").v2;
 const ProductRecommendation = require("../models/productRecommendation");
