@@ -1,10 +1,9 @@
 // backend/scripts/migrateCarData.js
-require("dotenv").config({ path: "./.env" }); // Sesuaikan path ke .env utama backend Anda
+require("dotenv").config({ path: "./.env" });
 const mongoose = require("mongoose");
-const connectDB = require("./config/db"); // Path ke koneksi DB Anda
-const CarData = require("./models/carDataModels"); // Path ke model CarData Anda
+const connectDB = require("./config/db"); 
+const CarData = require("./models/carDataModels");
 
-// Data dari carData.js Anda (salin dan tempel di sini)
 const carDataJs = {
   Toyota: {
     ImgUrl: "/images/Carbrand/toyota.png",
@@ -336,9 +335,8 @@ const migrateData = async () => {
             imgUrl: brandDetailsJs.ImgUrl || "/images/Carbrand/default.png",
             models: [],
           });
-          // Tidak perlu save di sini, save di akhir setelah semua modifikasi
           brandsCreated++;
-          brandNeedsSave = true; // Tetap tandai untuk save karena ini brand baru
+          brandNeedsSave = true; 
           console.log(`Merek '${brandNameJs}' akan dibuat.`);
         } else {
           console.log(`Merek '${brandNameJs}' sudah ada.`);
@@ -370,7 +368,6 @@ const migrateData = async () => {
               if (modelIndex === -1) {
                 const newModelObject = { name: modelNameJs, variants: [] };
                 brandEntry.models.push(newModelObject);
-                // Dapatkan referensi ke objek yang baru di-push untuk modifikasi lebih lanjut
                 modelInBrand = brandEntry.models[brandEntry.models.length - 1];
                 modelsCreated++;
                 brandNeedsSave = true;
@@ -378,7 +375,7 @@ const migrateData = async () => {
                   `  Model '${modelNameJs}' akan ditambahkan ke '${brandNameJs}'.`
                 );
               } else {
-                modelInBrand = brandEntry.models[modelIndex]; // Referensi ke model yang sudah ada
+                modelInBrand = brandEntry.models[modelIndex];  
                 if (!Array.isArray(modelInBrand.variants)) {
                   modelInBrand.variants = [];
                   brandNeedsSave = true;
@@ -396,7 +393,7 @@ const migrateData = async () => {
                   if (!variantExists) {
                     modelInBrand.variants.push({ name: variantNameJs });
                     variantsCreated++;
-                    brandNeedsSave = true; // Tandai bahwa ada perubahan
+                    brandNeedsSave = true; 
                     console.log(
                       `    Varian '${variantNameJs}' akan ditambahkan ke '${modelNameJs}'.`
                     );
@@ -412,8 +409,7 @@ const migrateData = async () => {
         }
 
         if (brandNeedsSave) {
-          // Jika brandEntry adalah dokumen Mongoose yang sudah ada,
-          // Mongoose akan melacak perubahan pada array models dan subdokumennya.
+    
           await brandEntry.save();
           console.log(
             `Data untuk merek '${brandNameJs}' berhasil disimpan/diperbarui.`
