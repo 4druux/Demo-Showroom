@@ -108,7 +108,7 @@ const Step3Form = ({
             />
 
             <span className="text-xs lg:text-sm  font-medium text-gray-700">
-              Showroom Mukrindo Motor
+              Demo Showroom
             </span>
           </label>
 
@@ -160,7 +160,7 @@ const Step3Form = ({
                 id="showroomAddress"
                 name="showroomAddress"
                 title="Alamat Showroom"
-                description="showroom Mukrindo Motor"
+                description="showroom Demo Showroom"
                 options={showroomOptions}
                 value={formData.showroomAddress}
                 onChange={(value) =>
@@ -332,7 +332,7 @@ const Step3Form = ({
                 >
                   Kebijakan Privasi
                 </a>{" "}
-                dari Mukrindo Motor
+                dari Demo Showroom
               </span>
             </label>
             {termsError && (

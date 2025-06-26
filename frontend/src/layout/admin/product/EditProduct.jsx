@@ -402,7 +402,7 @@ const EditProduct = ({ productId }) => {
       if (filesToUpload.length > 0) {
         const newUploadedUrls = await uploadMultipleImagesToCloudinary(
           filesToUpload,
-          "mukrindo_products",
+          "demo-showroom_products",
           (currentIndex, totalFiles) => {
             setUploadProgress({ current: currentIndex, total: totalFiles });
           }

@@ -256,7 +256,7 @@ const Step4Form = ({
               >
                 Kebijakan Privasi
               </a>{" "}
-              dari Mukrindo Motor
+              dari Demo Showroom
             </span>
           </label>
           {termsError && (

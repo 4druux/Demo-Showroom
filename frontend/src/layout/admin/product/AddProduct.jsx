@@ -287,7 +287,7 @@ const AddProduct = () => {
       if (filesToUpload.length > 0) {
         uploadedImageUrls = await uploadMultipleImagesToCloudinary(
           filesToUpload,
-          "mukrindo_products",
+          "demo-showroom_products",
           (currentIndex, totalFiles) => {
             setUploadProgress({ current: currentIndex, total: totalFiles });
           }
