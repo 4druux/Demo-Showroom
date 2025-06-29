@@ -475,15 +475,29 @@ const AddProduct = () => {
               onChange={(value) =>
                 handleChange({ target: { name: "type", value } })
               }
+              searchOption={true}
               options={[
-                {
-                  value: "suv",
-                  label: "SUV",
-                },
                 {
                   value: "mpv",
                   label: "MPV",
                 },
+                {
+                  value: "minibus",
+                  label: "Minibus",
+                },
+                {
+                  value: "van",
+                  label: "Van",
+                },
+                {
+                  value: "lcgc",
+                  label: "LCGC",
+                },
+                {
+                  value: "city-car",
+                  label: "City Car",
+                },
+
                 {
                   value: "sedan",
                   label: "Sedan",
@@ -504,26 +518,20 @@ const AddProduct = () => {
                   value: "wagon",
                   label: "Wagon/Estate",
                 },
+
                 {
-                  value: "pickup",
-                  label: "Pickup Truck",
-                },
-                {
-                  value: "minibus",
-                  label: "Minibus",
-                },
-                {
-                  value: "van",
-                  label: "Van",
+                  value: "suv",
+                  label: "SUV",
                 },
                 {
                   value: "jeep",
                   label: "Jeep",
                 },
                 {
-                  value: "city-car",
-                  label: "City Car",
+                  value: "pickup",
+                  label: "Pickup Truck",
                 },
+
                 {
                   value: "commercial",
                   label: "Commercial",
