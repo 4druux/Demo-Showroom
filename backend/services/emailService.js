@@ -19,7 +19,7 @@ const createOtpEmailHtml = (userName, otp) => {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OTP - Mukrindo Motor</title>
+    <title>OTP - Demo Showroom</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
@@ -34,7 +34,7 @@ const createOtpEmailHtml = (userName, otp) => {
                 <tr>
                     <td align="left">
                         <img src="https://res.cloudinary.com/do1oxpnak/image/upload/v1751176667/logo_itfqau.png"
-                            height="38" alt="Mukrindo Motor Logo" />
+                            height="38" alt="Demo Showroom Logo" />
                     </td <td align="right" style="font-size:14px;color:#ffffff;">
                     ${currentDate}
                     </td>
@@ -47,7 +47,7 @@ const createOtpEmailHtml = (userName, otp) => {
             <h2 style="margin:0;font-size:22px;font-weight:600;color:#1e293b;">Kode OTP Anda</h2>
             <p style="margin-top:18px;color:#1e293b;">Halo ${userName},</p>
             <p style="margin-top:16px;font-weight:400;color:#64748b;line-height:1.6;">
-                Gunakan kode berikut untuk masuk ke akun administrator Mukrindo Motor.<br />
+                Gunakan kode berikut untuk masuk ke akun administrator Demo Showroom.<br />
                 Kode ini hanya berlaku selama <strong style="color:#60a5fa;">10 menit</strong>.<br />
                 Jangan bagikan kepada siapa pun.
             </p>
@@ -100,7 +100,7 @@ const createPasswordResetHtml = (userName, resetLink) => {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reset Kata Sandi - Mukrindo Motor</title>
+    <title>Reset Kata Sandi - Demo Showroom</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
@@ -115,7 +115,7 @@ const createPasswordResetHtml = (userName, resetLink) => {
                 <tr>
                     <td align="left">
                         <img src="https://res.cloudinary.com/do1oxpnak/image/upload/v1751176667/logo_itfqau.png"
-                            height="38" alt="Mukrindo Motor Logo" />
+                            height="38" alt="Demo Showroom Logo" />
                     </td <td align="right" style="font-size:14px;color:#ffffff;">
                     ${currentDate}
                     </td>
@@ -186,7 +186,7 @@ const createAdminNotificationHtml = (title, data, ctaLink) => {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notifikasi Admin - Mukrindo Motor</title>
+    <title>Notifikasi Admin - Demo Showroom</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 
@@ -201,7 +201,7 @@ const createAdminNotificationHtml = (title, data, ctaLink) => {
                 <tr>
                     <td align="left">
                         <img src="https://res.cloudinary.com/do1oxpnak/image/upload/v1751176667/logo_itfqau.png"
-                            height="38" alt="Mukrindo Motor Logo" />
+                            height="38" alt="Demo Showroom Logo" />
                     </td <td align="right" style="font-size:14px;color:#ffffff;">
                     ${currentDate}
                     </td>

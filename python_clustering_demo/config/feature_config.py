@@ -1,20 +1,26 @@
-# Konfigurasi fitur dan bobotnya untuk clustering
-# Sesuaikan bobot (weight) untuk mengontrol pengaruh masing-masing fitur
+# python_clustering_demo/config/feature_config.py
+
 FEATURE_CONFIG = {
     'numerical': [
-        {'name': 'price', 'weight': 0.35},
-        {'name': 'yearOfAssembly', 'weight': 0.25},
-        {'name': 'cc', 'weight': 0.15},
-        {'name': 'travelDistance', 'weight': 0.1}, # Bobot lebih kecil jika kurang relevan untuk "sekelas"
-        {'name': 'numberOfSeats', 'weight': 0.15}
+        # Bobot harga dinaikkan secara drastis untuk menekankan perbedaan kelas
+        {'name': 'price', 'weight': 1.0},
+        # Tahun perakitan sangat penting, pertahankan bobot tinggi
+        {'name': 'yearOfAssembly', 'weight': 0.8},
+        # Bobot CC juga penting untuk performa
+        {'name': 'cc', 'weight': 0.6},
+        # Jumlah kursi penting, tapi tidak sepenting harga/tahun
+        {'name': 'numberOfSeats', 'weight': 0.5},
+        # Jarak tempuh bobotnya lebih rendah
+        {'name': 'travelDistance', 'weight': 0.3},
     ],
     'categorical': [
-        # Urutan penting untuk pipeline, pastikan ada di data produk Anda
-        {'name': 'type', 'weight': 0.3},
-        {'name': 'transmission', 'weight': 0.1},
-        {'name': 'fuelType', 'weight': 0.1},
-        {'name': 'driveSystem', 'weight': 0.1},
-        # 'carColor' bisa ditambahkan jika dirasa penting untuk kesamaan kelas
+        # Tipe mobil (SUV, Sedan) adalah pembeda utama
+        {'name': 'type', 'weight': 1.0},
+        # TAMBAHKAN 'brand'. Merek sangat krusial.
+        {'name': 'brand', 'weight': 0.9},
+        {'name': 'driveSystem', 'weight': 0.4},
+        {'name': 'transmission', 'weight': 0.2},
+        {'name': 'fuelType', 'weight': 0.2},
     ]
 }
 

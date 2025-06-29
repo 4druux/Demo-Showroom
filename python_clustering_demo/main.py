@@ -1,4 +1,4 @@
-# python_clustering/main.py
+# python_clustering_demo/main.py
 
 import os
 import pandas as pd
@@ -7,191 +7,157 @@ from dotenv import load_dotenv
 from bson import ObjectId
 from collections import defaultdict
 import traceback
+import random
 
-# Impor modul lokal dengan penanganan error jika tidak ada
 try:
     from data_processing.preparer import DataPreparer
     from clustering.model import Clusterer
     from database.updater import DatabaseUpdater
     CLUSTERING_MODULES_AVAILABLE = True
-except ImportError:
-    print("Peringatan: Modul clustering tidak ditemukan. Fitur fallback tidak akan berjalan.")
+except ImportError as e:
+    print(f"Peringatan: Salah satu modul clustering tidak ditemukan: {e}. Fitur clustering akan dilewati.")
     CLUSTERING_MODULES_AVAILABLE = False
 
+from config.feature_config import ALL_FEATURE_NAMES
+
+load_dotenv()
 
 def connect_to_db():
     """Membuat koneksi ke database MongoDB."""
-    load_dotenv()
-    mongo_uri = os.getenv("MONGO_URI")
-    if not mongo_uri:
-        print("Error: MONGO_URI tidak ditemukan di file .env")
-        return None
-        
     try:
-        client = MongoClient(mongo_uri)
+        uri = os.getenv("MONGO_URI")
+        client = MongoClient(uri)
         db = client.get_database() 
-        print(f"Berhasil terhubung ke database: {db.name}")
+        print("Koneksi ke MongoDB berhasil.")
         return db
     except Exception as e:
-        print(f"Gagal terhubung ke MongoDB: {e}")
-        traceback.print_exc()
+        print(f"Koneksi ke MongoDB gagal: {e}")
         return None
 
 def get_products_from_db(db):
-    """Mengambil semua data produk dari MongoDB."""
+    """Mengambil data produk dari database, termasuk harga untuk pengurutan."""
     try:
-        products_cursor = db.products.find({})
-        products_df = pd.DataFrame(list(products_cursor))
+        collection = db.products
+        query_fields = {feat: 1 for feat in ALL_FEATURE_NAMES}
+        query_fields['_id'] = 1
+        query_fields['price'] = 1 # Pastikan harga selalu diambil
         
-        if products_df.empty:
-            print("Tidak ada data produk yang ditemukan.")
+        cursor = collection.find({}, query_fields)
+        products_list = list(cursor)
+        
+        if not products_list:
+            print("Tidak ada produk yang ditemukan di database.")
             return None
-        
-        print(f"Berhasil mengambil {len(products_df)} data produk.")
-        return products_df
+            
+        df = pd.DataFrame(products_list)
+        df['price'] = pd.to_numeric(df['price'])
+        print(f"Berhasil mengambil {len(df)} produk dari database.")
+        return df
     except Exception as e:
-        print(f"Error saat mengambil data produk: {e}")
+        print(f"Error saat mengambil produk dari DB: {e}")
         return None
-
-def get_user_interactions(db):
-    """Mengambil data interaksi 'view' untuk rekomendasi item-based."""
-    try:
-        query = {"interactionType": "view"}
-        projection = {"_id": 0, "userId": 1, "productId": 1}
-        interactions_cursor = db.userinteractions.find(query, projection)
-        interactions_df = pd.DataFrame(list(interactions_cursor))
-
-        if interactions_df.empty:
-            print("Tidak ada data interaksi 'view' yang ditemukan.")
-            return None
-
-        interactions_df.drop_duplicates(inplace=True)
-        print(f"Berhasil mengambil {len(interactions_df)} data interaksi unik.")
-        return interactions_df
-    except Exception as e:
-        print(f"Error saat mengambil data interaksi: {e}")
-        return None
-
-def run_clustering_pipeline(db):
-    """Menjalankan pipeline clustering sebagai sistem fallback."""
-    if not CLUSTERING_MODULES_AVAILABLE:
-        print("Melewatkan tahap clustering karena modul tidak tersedia.")
-        return
-
-    try:
-        products_df = get_products_from_db(db)
-        if products_df is None or products_df.empty:
-            return
-
-        preparer = DataPreparer(products_df)
-        prepared_data = preparer.process()
-
-        if prepared_data.empty:
-            print("Data yang dipersiapkan kosong, clustering dihentikan.")
-            return
-
-        clusterer = Clusterer(prepared_data)
-        clustered_data = clusterer.perform_clustering()
-        
-        updater = DatabaseUpdater(db)
-        # **PERBAIKAN UTAMA ADA DI SINI**
-        # Ganti nama metode menjadi 'update_products'
-        updater.update_products(clustered_data)
-
-    except Exception as e:
-        print(f"Terjadi error pada tahap clustering: {e}")
-        traceback.print_exc()
-
-
-def run_item_based_recommendations(db):
-    """Menjalankan pipeline rekomendasi personal (item-based)."""
-    try:
-        interactions_df = get_user_interactions(db)
-        if interactions_df is None:
-            print("Melewatkan rekomendasi personal karena tidak ada data interaksi.")
-            return
-
-        user_to_items_map = interactions_df.groupby('userId')['productId'].apply(list)
-        
-        co_occurrence_matrix = defaultdict(int)
-        for items in user_to_items_map:
-            for i in range(len(items)):
-                for j in range(i + 1, len(items)):
-                    item1, item2 = sorted([str(items[i]), str(items[j])])
-                    co_occurrence_matrix[(item1, item2)] += 1
-        
-        print(f"Menemukan {len(co_occurrence_matrix)} pasangan produk yang dilihat bersamaan.")
-
-        recommendations_map = defaultdict(list)
-        for (item1, item2), score in co_occurrence_matrix.items():
-            if score > 0:
-                recommendations_map[item1].append((item2, score))
-                recommendations_map[item2].append((item1, score))
-
-        # Sort recommendations by score
-        for item in recommendations_map:
-            recommendations_map[item].sort(key=lambda x: x[1], reverse=True)
-        
-        print("Pembuatan peta rekomendasi selesai.")
-        update_recommendations_in_db(db, recommendations_map)
-
-    except Exception as e:
-        print(f"Terjadi error pada tahap rekomendasi personal: {e}")
-        traceback.print_exc()
 
 def update_recommendations_in_db(db, recommendations_map):
-    """Menghapus rekomendasi lama dan menyimpan yang baru."""
+    """Menyimpan rekomendasi berbasis clustering yang sudah terurut ke database."""
     if not recommendations_map:
         print("Tidak ada peta rekomendasi untuk disimpan.")
         return
     
-    print("Menyimpan/memperbarui rekomendasi di database...")
+    rec_type = "clustering-based"
+    print(f"Menyimpan/memperbarui rekomendasi tipe '{rec_type}' di database...")
     collection = db.productrecommendations
     
     try:
-        collection.drop()
-        print("Koleksi 'productrecommendations' lama berhasil dihapus.")
+        collection.delete_many({"type": rec_type})
+        print(f"Rekomendasi lama dengan tipe '{rec_type}' berhasil dihapus.")
 
-        docs_to_insert = [
-            {
-                "productId": ObjectId(product_id),
-                "recommendations": [ObjectId(rec[0]) for rec in recs],
-                "type": "item-based",
+        docs_to_insert = []
+        for product_id_str, rec_ids in recommendations_map.items():
+            if not rec_ids:
+                continue
+
+            docs_to_insert.append({
+                "productId": ObjectId(product_id_str),
+                "recommendations": rec_ids,
+                "type": rec_type,
                 "lastUpdated": pd.Timestamp.now()
-            }
-            for product_id, recs in recommendations_map.items()
-        ]
+            })
         
         if docs_to_insert:
             collection.insert_many(docs_to_insert)
-            print(f"Berhasil menyimpan {len(docs_to_insert)} dokumen rekomendasi baru.")
-        else:
-            print("Tidak ada dokumen rekomendasi yang perlu disimpan.")
+            print(f"Berhasil menyimpan {len(docs_to_insert)} dokumen rekomendasi tipe '{rec_type}' baru.")
 
     except Exception as e:
         print(f"Error saat memperbarui rekomendasi di DB: {e}")
         traceback.print_exc()
 
 def main_pipeline():
-    """Menjalankan seluruh pipeline rekomendasi."""
+    """Menjalankan pipeline rekomendasi clustering dengan pengurutan berdasarkan harga."""
     print("="*50)
-    print("Memulai pipeline rekomendasi...")
+    print("Memulai pipeline rekomendasi (Clustering + Pengurutan Harga)...")
     print("="*50)
     
     db = connect_to_db()
-    if db is None:
-        print("Pipeline dihentikan karena koneksi database gagal.")
+    if db is None: return
+
+    products_df = get_products_from_db(db)
+    if products_df is None or products_df.empty:
+        print("Pipeline berhenti karena tidak ada data produk.")
         return
 
-    print("\n--- Tahap 1: Clustering Produk (Fallback System) ---")
-    run_clustering_pipeline(db)
-    
-    print("\n--- Tahap 2: Rekomendasi Personal (Item-Based) ---")
-    run_item_based_recommendations(db)
+    # TAHAP 1: Menjalankan Clustering
+    print("\n--- Tahap 1: Menjalankan Clustering Produk ---")
+    clustered_data = None
+    if CLUSTERING_MODULES_AVAILABLE:
+        preparer = DataPreparer(products_df)
+        prepared_data = preparer.process()
+
+        if not prepared_data.empty:
+            clusterer = Clusterer(prepared_data)
+            clustered_data = clusterer.perform_clustering()
+            
+            updater = DatabaseUpdater(db)
+            updater.update_products(clustered_data)
+    else:
+        print("Modul-modul untuk clustering tidak tersedia. Melewatkan.")
+
+    # TAHAP 2: Membuat Rekomendasi dan Mengurutkan Berdasarkan Harga
+    print("\n--- Tahap 2: Membuat dan Mengurutkan Rekomendasi dari Cluster ---")
+    if clustered_data is not None and not clustered_data.empty:
+        max_recs = int(os.getenv("MAX_RECOMMENDATIONS_PER_PRODUCT", 8))
+        
+        # Gabungkan hasil cluster dengan data produk asli untuk mendapatkan harga
+        full_data = pd.merge(clustered_data, products_df[['_id', 'price']], on='_id')
+        price_lookup = full_data.set_index('_id')['price'].to_dict()
+        cluster_map = full_data.groupby('clusterId')['_id'].apply(list)
+        
+        recommendations_map = defaultdict(list)
+        
+        for _, product_ids in cluster_map.items():
+            if len(product_ids) < 2:
+                continue
+
+            for source_id in product_ids:
+                source_price = price_lookup.get(source_id)
+                if source_price is None: continue
+
+                # Ambil semua mobil lain dalam cluster
+                potential_recs = [rec_id for rec_id in product_ids if rec_id != source_id]
+                
+                # Urutkan berdasarkan selisih harga absolut
+                sorted_recs = sorted(potential_recs, 
+                                     key=lambda rec_id: abs(price_lookup.get(rec_id, float('inf')) - source_price))
+                
+                recommendations_map[str(source_id)] = sorted_recs[:max_recs]
+        
+        print(f"Berhasil membuat & mengurutkan {len(recommendations_map)} peta rekomendasi.")
+        update_recommendations_in_db(db, recommendations_map)
+    else:
+        print("Tidak ada data hasil clustering untuk dibuatkan rekomendasi.")
 
     print("\n" + "="*50)
-    print("Pipeline rekomendasi selesai.")
+    print("Pipeline rekomendasi cerdas selesai.")
     print("="*50)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main_pipeline()
