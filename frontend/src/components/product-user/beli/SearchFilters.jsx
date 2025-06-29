@@ -337,21 +337,56 @@ const SearchFilters = ({ onActionComplete = () => {} }) => {
             onChange={(value) => handleFilterChange("type", value)}
             options={[
               {
+                value: "suv",
+                label: "SUV",
+              },
+              {
+                value: "mpv",
+                label: "MPV",
+              },
+              {
                 value: "sedan",
                 label: "Sedan",
-                ImgUrl: "/images/CarType/sedan.png",
               },
               {
                 value: "hatchback",
                 label: "Hatchback",
-                ImgUrl: "/images/CarType/hatchback.png",
               },
-              { value: "suv", label: "SUV", ImgUrl: "/images/CarType/suv.png" },
-              { value: "mpv", label: "MPV", ImgUrl: "/images/CarType/mpv.png" },
+              {
+                value: "coupe",
+                label: "Coupe",
+              },
+              {
+                value: "convertible",
+                label: "Convertible",
+              },
+              {
+                value: "wagon",
+                label: "Wagon/Estate",
+              },
+              {
+                value: "pickup",
+                label: "Pickup Truck",
+              },
               {
                 value: "minibus",
                 label: "Minibus",
-                ImgUrl: "/images/CarType/minibus.png",
+              },
+              {
+                value: "van",
+                label: "Van",
+              },
+              {
+                value: "jeep",
+                label: "Jeep",
+              },
+              {
+                value: "city-car",
+                label: "City Car",
+              },
+              {
+                value: "commercial",
+                label: "Commercial",
               },
             ]}
           />
