@@ -40,7 +40,7 @@ def get_products_from_db(db):
         collection = db.products
         query_fields = {feat: 1 for feat in ALL_FEATURE_NAMES}
         query_fields['_id'] = 1
-        query_fields['price'] = 1 # Pastikan harga selalu diambil
+        query_fields['price'] = 1
         
         cursor = collection.find({}, query_fields)
         products_list = list(cursor)
