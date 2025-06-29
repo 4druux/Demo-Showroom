@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 # Muat variabel dari .env di direktori root python_clustering
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env') # Menunjuk ke python_clustering/.env
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env') 
 load_dotenv(dotenv_path)
 
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
